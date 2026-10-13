@@ -79,6 +79,9 @@ The endpoint sent 6 sourcetypes: Security, System and Application event logs plu
 - Correlated 3 failed logons with a successful interactive logon, reviewed post-logon process activity, and ran a targeted PowerShell hunt.
 - Documented the incident: severity, evidence, containment and escalation decisions, and disposition. → [Investigation write-up](docs/03_INVESTIGATION.md)
 
+![Scheduled alert firing automatically: Trigger History](images/12_alert_trigger_history.png)
+*The "Repeated Failed Windows Logons – 3 in 5 Minutes" alert firing automatically on schedule (Trigger History). All 15 step-by-step screenshots are in the [detection engineering write-up](docs/02_DETECTION_ENGINEERING.md).*
+
 ---
 
 ## Detection Logic
