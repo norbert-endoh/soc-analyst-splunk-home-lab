@@ -1,0 +1,7 @@
+`comment("Investigation: targeted hunt for PowerShell launched by the user (4688)")`
+index=* host="DESKTOP-4AMTH10" sourcetype="WinEventLog:Security" EventCode=4688
+| eval user=coalesce(SubjectUserName, Account_Name)
+| where user="labuser"
+| search New_Process_Name="*powershell.exe"
+| table _time user New_Process_Name Process_Command_Line
+| sort _time

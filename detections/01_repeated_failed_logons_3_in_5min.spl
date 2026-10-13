@@ -1,0 +1,18 @@
+`comment("
+Detection:   Repeated Failed Windows Logons - 3 in 5 Minutes
+Data source: WinEventLog:Security (Event ID 4625 - failed logon)
+Logic:       3+ failed logons for the same user inside a 5-minute bucket
+Schedule:    cron */5 * * * *  |  Search window: last 15 minutes
+Trigger:     Number of results > 0  |  Action: Add to Triggered Alerts
+Tuning:      Throttle - suppress by target_user for 15 minutes
+MITRE ATT&CK: T1110 - Brute Force
+")`
+index=* host="DESKTOP-4AMTH10" sourcetype="WinEventLog:Security" EventCode=4625
+| eval target_user=mvindex(Account_Name,-1)
+| where isnotnull(target_user) AND target_user!="" AND NOT match(target_user,"\$$")
+| bin _time span=5m
+| stats count as failed_logons
+        values(Source_Network_Address) as source
+        values(Workstation_Name) as workstation
+        by _time target_user
+| where failed_logons>=3

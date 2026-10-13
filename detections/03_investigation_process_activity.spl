@@ -1,0 +1,6 @@
+`comment("Investigation: process creation (4688) in the user's session after logon")`
+index=* host="DESKTOP-4AMTH10" sourcetype="WinEventLog:Security" EventCode=4688
+| eval user=coalesce(SubjectUserName, Account_Name)
+| where user="labuser"
+| table _time user New_Process_Name Process_Command_Line
+| sort _time

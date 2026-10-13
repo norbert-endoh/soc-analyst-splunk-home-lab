@@ -1,0 +1,6 @@
+`comment("Investigation: correlate failed (4625) and successful (4624) logons for one user")`
+index=* host="DESKTOP-4AMTH10" sourcetype="WinEventLog:Security" (EventCode=4624 OR EventCode=4625)
+| eval user=coalesce(TargetUserName, Account_Name)
+| where user="labuser"
+| table _time EventCode user Source_Network_Address Workstation_Name Logon_Type
+| sort _time

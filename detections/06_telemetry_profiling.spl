@@ -1,0 +1,11 @@
+`comment("Telemetry profiling used before building detections")`
+`comment("1) Which hosts are sending data?")`
+index=* host=* | stats count by host
+
+`comment("2) Which sourcetypes does the endpoint send?")`
+index=* host="DESKTOP-4AMTH10" | stats count by sourcetype
+
+`comment("3) Which Windows Security Event IDs are present?")`
+index=* host="DESKTOP-4AMTH10" sourcetype="WinEventLog:Security"
+| stats count by EventCode
+| sort - count

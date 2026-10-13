@@ -1,0 +1,4 @@
+`comment("SIEM health check: confirm Windows Security telemetry is still arriving")`
+index=* host="DESKTOP-4AMTH10" sourcetype="WinEventLog:Security"
+| stats count as Total_Security_Events latest(_time) as Latest_Event
+| convert ctime(Latest_Event)
